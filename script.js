@@ -1,31 +1,38 @@
-let randomNumber;
-let attempts;
+document.addEventListener('DOMContentLoaded', () => {
+    const numberContainer = document.getElementById('numbers');
+    const guessInput = document.getElementById('guessInput');
+    const guessButton = document.getElementById('guessButton');
+    const resetButton = document.getElementById('resetButton');
+    const feedback = document.getElementById('feedback');
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
 
-function initializeGame() {
-    randomNumber = Math.floor(Math.random() * 100) + 1;
-    attempts = 0;
-    document.getElementById('attempts').textContent = attempts;
-    document.getElementById('feedback').textContent = '';
-    document.getElementById('guessInput').value = '';
-}
-
-document.getElementById('guessButton').addEventListener('click', () => {
-    const userGuess = parseInt(document.getElementById('guessInput').value);
-    attempts++;
-    document.getElementById('attempts').textContent = attempts;
-
-    if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
-        document.getElementById('feedback').textContent = 'Please enter a valid number between 1 and 100.';
-    } else if (userGuess < randomNumber) {
-        document.getElementById('feedback').textContent = 'Too low! Try again.';
-    } else if (userGuess > randomNumber) {
-        document.getElementById('feedback').textContent = 'Too high! Try again.';
-    } else {
-        document.getElementById('feedback').textContent = `Congratulations! You guessed the number in ${attempts} attempts.`;
+    // Create floating numbers
+    for (let i = 0; i < 50; i++) {
+        const number = document.createElement('div');
+        number.classList.add('number');
+        number.textContent = Math.floor(Math.random() * 100);
+        number.style.top = Math.random() * 100 + 'vh';
+        number.style.left = Math.random() * 100 + 'vw';
+        number.style.animationDelay = Math.random() * 10 + 's';
+        numberContainer.appendChild(number);
     }
+
+    guessButton.addEventListener('click', () => {
+        const userGuess = parseInt(guessInput.value, 10);
+        if (isNaN(userGuess)) {
+            feedback.textContent = 'Please enter a valid number.';
+        } else if (userGuess === randomNumber) {
+            feedback.textContent = 'Congratulations! You guessed the correct number!';
+        } else if (userGuess < randomNumber) {
+            feedback.textContent = 'Try a higher number!';
+        } else {
+            feedback.textContent = 'Try a lower number!';
+        }
+    });
+
+    resetButton.addEventListener('click', () => {
+        randomNumber = Math.floor(Math.random() * 100) + 1;
+        feedback.textContent = '';
+        guessInput.value = '';
+    });
 });
-
-document.getElementById('resetButton').addEventListener('click', initializeGame);
-
-// Initialize the game when the page loads
-initializeGame();
