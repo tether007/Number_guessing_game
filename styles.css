@@ -8,6 +8,8 @@ body {
     animation: gradientAnimation 10s ease infinite;
     font-family: 'Arial', sans-serif;
     margin: 0;
+    overflow: hidden;
+    position: relative;
 }
 
 @keyframes gradientAnimation {
@@ -20,6 +22,38 @@ body {
     100% {
         background-position: 0% 50%;
     }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+    50% {
+        transform: translateY(-30px) translateX(30px);
+    }
+    100% {
+        transform: translateY(0) translateX(0);
+    }
+}
+
+.numbers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.number {
+    position: absolute;
+    font-size: 3rem; /* Increased font size */
+    color: rgba(255, 255, 255, 0.5);
+    font-family: "Poppins", serif;
+    font-weight: 900;
+    font-style: normal; ; /* Comic-like font */
+    animation: float 5s ease-in-out infinite;
 }
 
 .container {
